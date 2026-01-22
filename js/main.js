@@ -149,11 +149,18 @@ jQuery(function($) {
     };
 
     
-    $('.btn-show-menu-mobile').on('click', function(e){
+    // Mobile Menu Toggle - Enhanced
+    $(document).on('click', '.btn-show-menu-mobile', function(e){
+        e.preventDefault();
         $(this).toggleClass('is-active'); 
-        $('.menu-mobile').toggleClass('show'); 
-        return false;
-        e.preventDefault();  
+        $('nav.menu-mobile').toggleClass('show');
+        console.log('Mobile menu toggled');
+    });
+    
+    // Close menu when clicking on a menu link
+    $(document).on('click', 'nav.menu-mobile a', function(){
+        $('.btn-show-menu-mobile').removeClass('is-active');
+        $('nav.menu-mobile').removeClass('show');
     });
 
     // Initialize
