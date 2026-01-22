@@ -149,18 +149,35 @@ jQuery(function($) {
     };
 
     
-    // Mobile Menu Toggle - Enhanced
+    // Mobile Menu Toggle - Robust Handler
     $(document).on('click', '.btn-show-menu-mobile', function(e){
+        e.stopPropagation();
         e.preventDefault();
-        $(this).toggleClass('is-active'); 
-        $('nav.menu-mobile').toggleClass('show');
-        console.log('Mobile menu toggled');
+        var btn = $(this);
+        var menu = btn.closest('.site-navigation').find('nav.menu-mobile');
+        
+        btn.toggleClass('is-active');
+        menu.toggleClass('show');
+        
+        console.log('Mobile menu toggled - button has is-active:', btn.hasClass('is-active'));
+        console.log('Menu has show:', menu.hasClass('show'));
     });
     
     // Close menu when clicking on a menu link
-    $(document).on('click', 'nav.menu-mobile a', function(){
-        $('.btn-show-menu-mobile').removeClass('is-active');
-        $('nav.menu-mobile').removeClass('show');
+    $(document).on('click', 'nav.menu-mobile a', function(e){
+        var menu = $(this).closest('nav.menu-mobile');
+        var btn = menu.closest('.site-navigation').find('.btn-show-menu-mobile');
+        
+        btn.removeClass('is-active');
+        menu.removeClass('show');
+    });
+    
+    // Close menu when clicking outside
+    $(document).on('click', function(e){
+        if (!$(e.target).closest('.site-navigation').length) {
+            $('.btn-show-menu-mobile').removeClass('is-active');
+            $('nav.menu-mobile').removeClass('show');
+        }
     });
 
     // Initialize

@@ -253,7 +253,34 @@
 	 #site-header-menu .site-navigation ul.menu > li >a{color: #9d9d9d;}
 
     
-
+	/* Mobile Menu Fix - Prevent Overlay */
+	#site-header-menu .site-navigation {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+	}
+	
+	#site-header-menu .site-navigation .site-branding {
+		flex: 1;
+		order: 1;
+	}
+	
+	#site-header-menu .site-navigation .btn-show-menu-mobile {
+		order: 2;
+		display: block;
+		position: relative;
+		padding: 15px;
+		z-index: 20;
+	}
+	
+	#site-header-menu .site-navigation nav.menu-mobile {
+		order: 3;
+		width: 100%;
+	}
+	
+	#site-header-menu .site-navigation .header_extra {
+		display: none !important;
+	}
 
 	/* logo */
 	.site-branding { padding: 25px 0; }
