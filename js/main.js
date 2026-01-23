@@ -31,8 +31,8 @@ jQuery(function($) {
 
   // Error handling for external resources
   window.onerror = function(message, source, lineno, colno, error) {
-    console.warn('Script error: ', message, ' at ', source, ':', lineno, ':', colno);
-    return true;
+    console.warn('Script error caught:', {message, source, lineno, colno, error});
+    return false;
   };
 
   // Handle failed image loads
@@ -149,40 +149,46 @@ jQuery(function($) {
     };
 
     
-    // Mobile Menu Toggle - Robust Handler
-    $(document).on('click', '.btn-show-menu-mobile', function(e){
-        e.stopPropagation();
-        e.preventDefault();
-        var btn = $(this);
-        var menu = btn.closest('.site-navigation').find('nav.menu-mobile');
-        
-        btn.toggleClass('is-active');
-        menu.toggleClass('show');
-        
-        console.log('Mobile menu toggled - button has is-active:', btn.hasClass('is-active'));
-        console.log('Menu has show:', menu.hasClass('show'));
-    });
+    // Mobile Menu Toggle
+    var toggleBtn = document.querySelector('.btn-show-menu-mobile');
+    var mobileMenu = document.querySelector('nav.menu-mobile');
     
-    // Close menu when clicking on a menu link
-    $(document).on('click', 'nav.menu-mobile a', function(e){
-        var menu = $(this).closest('nav.menu-mobile');
-        var btn = menu.closest('.site-navigation').find('.btn-show-menu-mobile');
+    if (toggleBtn && mobileMenu) {
+        toggleBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            
+            toggleBtn.classList.toggle('is-active');
+            mobileMenu.classList.toggle('show');
+            
+            console.log('Menu toggled. is-active:', toggleBtn.classList.contains('is-active'), 'show:', mobileMenu.classList.contains('show'));
+        });
         
-        btn.removeClass('is-active');
-        menu.removeClass('show');
-    });
-    
-    // Close menu when clicking outside
-    $(document).on('click', function(e){
-        if (!$(e.target).closest('.site-navigation').length) {
-            $('.btn-show-menu-mobile').removeClass('is-active');
-            $('nav.menu-mobile').removeClass('show');
-        }
-    });
+        // Close menu when clicking on menu links
+        var menuLinks = mobileMenu.querySelectorAll('a');
+        menuLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                toggleBtn.classList.remove('is-active');
+                mobileMenu.classList.remove('show');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            var isClickInsideNav = toggleBtn.contains(e.target) || mobileMenu.contains(e.target);
+            if (!isClickInsideNav) {
+                toggleBtn.classList.remove('is-active');
+                mobileMenu.classList.remove('show');
+            }
+        });
+    } else {
+        console.warn('Mobile menu elements not found. Toggle btn:', !!toggleBtn, 'Menu:', !!mobileMenu);
+    }
 
     // Initialize
     $(document).ready(function(){
         menu.initialize();
+        console.log('Page initialized');
 
     });
 
