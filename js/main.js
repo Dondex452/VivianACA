@@ -31,8 +31,8 @@ jQuery(function($) {
 
   // Error handling for external resources
   window.onerror = function(message, source, lineno, colno, error) {
-    console.warn('Script error caught:', {message, source, lineno, colno, error});
-    return false;
+    console.warn('Script error: ', message, ' at ', source, ':', lineno, ':', colno);
+    return true;
   };
 
   // Handle failed image loads
@@ -149,46 +149,16 @@ jQuery(function($) {
     };
 
     
-    // Mobile Menu Toggle
-    var toggleBtn = document.querySelector('.btn-show-menu-mobile');
-    var mobileMenu = document.querySelector('nav.menu-mobile');
-    
-    if (toggleBtn && mobileMenu) {
-        toggleBtn.addEventListener('click', function(e){
-            e.preventDefault();
-            e.stopPropagation();
-            
-            toggleBtn.classList.toggle('is-active');
-            mobileMenu.classList.toggle('show');
-            
-            console.log('Menu toggled. is-active:', toggleBtn.classList.contains('is-active'), 'show:', mobileMenu.classList.contains('show'));
-        });
-        
-        // Close menu when clicking on menu links
-        var menuLinks = mobileMenu.querySelectorAll('a');
-        menuLinks.forEach(function(link) {
-            link.addEventListener('click', function() {
-                toggleBtn.classList.remove('is-active');
-                mobileMenu.classList.remove('show');
-            });
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(e) {
-            var isClickInsideNav = toggleBtn.contains(e.target) || mobileMenu.contains(e.target);
-            if (!isClickInsideNav) {
-                toggleBtn.classList.remove('is-active');
-                mobileMenu.classList.remove('show');
-            }
-        });
-    } else {
-        console.warn('Mobile menu elements not found. Toggle btn:', !!toggleBtn, 'Menu:', !!mobileMenu);
-    }
+    $('.btn-show-menu-mobile').on('click', function(e){
+        $(this).toggleClass('is-active'); 
+        $('.menu-mobile').toggleClass('show'); 
+        return false;
+        e.preventDefault();  
+    });
 
     // Initialize
     $(document).ready(function(){
         menu.initialize();
-        console.log('Page initialized');
 
     });
 
