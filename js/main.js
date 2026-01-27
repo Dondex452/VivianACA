@@ -24,6 +24,19 @@
 
  =============== */
 
+// Mobile menu toggle - must be outside jQuery ready to ensure it binds early
+document.addEventListener('DOMContentLoaded', function() {
+    var menuBtn = document.querySelector('.btn-show-menu-mobile');
+    var mainMenu = document.querySelector('nav.main-menu');
+    
+    if (menuBtn && mainMenu) {
+        menuBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            this.classList.toggle('is-active');
+            mainMenu.classList.toggle('show');
+        });
+    }
+});
 
 jQuery(function($) {
 
@@ -147,14 +160,6 @@ jQuery(function($) {
             }
         },
     };
-
-    
-    // Mobile menu toggle handler
-    $('.btn-show-menu-mobile').on('click', function(e){
-        e.preventDefault();
-        $(this).toggleClass('is-active'); 
-        $('nav.main-menu').toggleClass('show');
-    });
 
     // Initialize
     $(document).ready(function(){

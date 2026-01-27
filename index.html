@@ -1069,6 +1069,22 @@
     <script src="js/circle-progress.min.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/loading-optimization.js"></script>
+    
+    <!-- Mobile Nav Fallback -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var menuBtn = document.querySelector('.btn-show-menu-mobile');
+        var mainMenu = document.querySelector('nav.main-menu');
+        if (menuBtn && mainMenu) {
+            menuBtn.onclick = function(e) {
+                e.preventDefault();
+                this.classList.toggle('is-active');
+                mainMenu.classList.toggle('show');
+                return false;
+            };
+        }
+    });
+    </script>
 
 </body>
 
