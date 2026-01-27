@@ -150,10 +150,10 @@ jQuery(function($) {
 
     
     $('.btn-show-menu-mobile').on('click', function(e){
+        e.preventDefault();
+        e.stopPropagation();
         $(this).toggleClass('is-active'); 
-        $('.menu-mobile').toggleClass('show'); 
-        return false;
-        e.preventDefault();  
+        $('nav.main-menu.menu-mobile').toggleClass('show'); 
     });
 
     // Initialize

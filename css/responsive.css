@@ -878,3 +878,71 @@
 @media (max-width:320px){
   .spacing-10{padding-top: 230px;}
 }
+
+/* ================================================
+   FIX: OUR SERVICES - Make all service boxes equal height
+   ================================================ */
+.services-section .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.services-section .row > [class*='col-'] {
+    display: flex;
+}
+
+.services-section .featured-icon-box.style2 {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.services-section .featured-icon-box.style2 .featured-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.services-section .featured-icon-box.style2 .featured-desc {
+    flex: 1;
+}
+
+/* ================================================
+   FIX: Mobile - Prevent header/masthead overlapping slider content
+   ================================================ */
+@media (max-width: 1199px) {
+    #masthead {
+        position: relative;
+        z-index: 1000;
+    }
+    
+    .banner_slider,
+    .banner_slider .slick-track,
+    .banner_slider .slick-list {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Ensure proper stacking of header elements */
+    .site-header-menu {
+        position: relative;
+        z-index: 1001;
+    }
+    
+    nav.main-menu.menu-mobile {
+        z-index: 1002;
+    }
+}
+
+@media (max-width: 767px) {
+    /* Make services boxes stack properly on mobile */
+    .services-section .row > [class*='col-'] {
+        margin-bottom: 15px;
+    }
+    
+    .services-section .featured-icon-box.style2 {
+        height: auto;
+        min-height: 200px;
+    }
+}
