@@ -149,12 +149,23 @@ jQuery(function($) {
     };
 
     
-    // Mobile menu toggle - enhanced handler
-    $(document).on('click', '.btn-show-menu-mobile', function(e){
+    // Mobile menu toggle - enhanced handler with multiple event bindings
+    $(document).on('click touchstart', '.btn-show-menu-mobile, .menubar, .menubar-box, .menubar-inner', function(e){
         e.preventDefault();
         e.stopPropagation();
-        $(this).toggleClass('is-active'); 
-        $('nav.main-menu').toggleClass('show'); 
+        
+        // Find the parent btn-show-menu-mobile element
+        var $menuBtn = $(this).closest('.btn-show-menu-mobile');
+        if ($menuBtn.length === 0) {
+            $menuBtn = $(this);
+        }
+        
+        // Toggle the is-active class on the button
+        $menuBtn.toggleClass('is-active');
+        
+        // Toggle the show class on the navigation menu
+        $('nav.main-menu').toggleClass('show');
+        
         return false;
     });
 

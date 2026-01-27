@@ -264,21 +264,18 @@ ul.menu-col li a:focus{
         max-height: 10000px;
         position: absolute;
         box-shadow: 0 0 10px 0 rgba(0, 43, 92, 0.08);
-        z-index: 9999;
+        z-index: 100;
         top: 100%;
         left: 0;
         right: 0;
         background-color: #fff;
         border-top-width: 3px;
         border-top-style: solid;
-        border-top-color: #8cbc43;
     }
     nav.main-menu.show{
-        display: block !important;
+        display: block;
         max-height: 10000px;
         width: 100%;
-        visibility: visible !important;
-        opacity: 1 !important;
     }
     nav.main-menu ul.menu, nav.main-menu ul.menu > li{ 
         display: block;
