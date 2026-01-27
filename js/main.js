@@ -149,11 +149,13 @@ jQuery(function($) {
     };
 
     
-    $('.btn-show-menu-mobile').on('click', function(e){
+    // Mobile menu toggle - enhanced handler
+    $(document).on('click', '.btn-show-menu-mobile', function(e){
         e.preventDefault();
         e.stopPropagation();
         $(this).toggleClass('is-active'); 
-        $('nav.main-menu.menu-mobile').toggleClass('show'); 
+        $('nav.main-menu').toggleClass('show'); 
+        return false;
     });
 
     // Initialize

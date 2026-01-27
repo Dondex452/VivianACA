@@ -909,29 +909,46 @@
 }
 
 /* ================================================
-   FIX: Mobile - Prevent header/masthead overlapping slider content
+   FIX: Mobile - Header and Banner Overlap
    ================================================ */
 @media (max-width: 1199px) {
-    #masthead {
-        position: relative;
-        z-index: 1000;
+    /* Make header non-absolute to prevent overlap */
+    header.ttm-header-style-01 {
+        position: relative !important;
+        background-color: #202426 !important;
     }
     
-    .banner_slider,
-    .banner_slider .slick-track,
-    .banner_slider .slick-list {
+    /* Ensure banner sits below header */
+    .banner_slider {
         position: relative;
         z-index: 1;
     }
     
-    /* Ensure proper stacking of header elements */
-    .site-header-menu {
-        position: relative;
-        z-index: 1001;
+    /* Mobile menu proper z-index */
+    nav.main-menu {
+        z-index: 9999 !important;
     }
     
-    nav.main-menu.menu-mobile {
-        z-index: 1002;
+    nav.main-menu.show {
+        display: block !important;
+    }
+    
+    /* Ensure menu toggle button is visible and clickable */
+    .btn-show-menu-mobile {
+        display: block !important;
+        position: relative;
+        z-index: 10000;
+        cursor: pointer;
+    }
+    
+    /* Site navigation flex layout fix */
+    .site-navigation {
+        flex-wrap: wrap;
+    }
+    
+    /* Hide header extras on mobile */
+    .header_extra {
+        display: none !important;
     }
 }
 
@@ -944,5 +961,19 @@
     .services-section .featured-icon-box.style2 {
         height: auto;
         min-height: 200px;
+    }
+    
+    /* Ensure proper banner display on mobile */
+    .banner_slider .slide__content--headings h2 {
+        font-size: 28px;
+        line-height: 36px;
+    }
+    
+    .banner_slider .slide__content--headings h3 {
+        font-size: 14px;
+    }
+    
+    .banner_slider .slide__content--headings p {
+        font-size: 14px;
     }
 }
