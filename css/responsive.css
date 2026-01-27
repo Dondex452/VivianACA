@@ -909,28 +909,41 @@
 }
 
 /* ================================================
-   FIX: Mobile - Header and Banner Overlap
+   FIX: Mobile - Header and Banner Layout
    ================================================ */
 @media (max-width: 1199px) {
-    /* Make header non-absolute to prevent overlap */
+    /* Keep header absolute but ensure proper stacking */
     header.ttm-header-style-01 {
-        position: relative !important;
-        background-color: #202426 !important;
+        position: absolute !important;
+        width: 100%;
+        z-index: 999;
+        background-color: rgba(32, 36, 38, 0.95) !important;
     }
     
-    /* Ensure banner sits below header */
-    .banner_slider {
-        position: relative;
-        z-index: 1;
+    /* Add top padding to banner to prevent content overlap */
+    .banner_slider .slide {
+        padding-top: 80px;
     }
     
-    /* Mobile menu proper z-index */
+    .banner_slider .slide .slide__content {
+        padding-top: 20px;
+    }
+    
+    /* Mobile menu - ensure it displays properly */
     nav.main-menu {
         z-index: 9999 !important;
+        background-color: #fff !important;
     }
     
     nav.main-menu.show {
         display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    /* Menu links color fix for white background */
+    nav.main-menu ul.menu > li > a {
+        color: #333 !important;
     }
     
     /* Ensure menu toggle button is visible and clickable */
@@ -939,11 +952,19 @@
         position: relative;
         z-index: 10000;
         cursor: pointer;
+        padding: 15px;
+    }
+    
+    .btn-show-menu-mobile .menubar-inner,
+    .btn-show-menu-mobile .menubar-inner:before,
+    .btn-show-menu-mobile .menubar-inner:after {
+        background-color: #fff;
     }
     
     /* Site navigation flex layout fix */
     .site-navigation {
         flex-wrap: wrap;
+        position: relative;
     }
     
     /* Hide header extras on mobile */
@@ -953,6 +974,11 @@
 }
 
 @media (max-width: 767px) {
+    /* More padding on smaller screens */
+    .banner_slider .slide {
+        padding-top: 100px;
+    }
+    
     /* Make services boxes stack properly on mobile */
     .services-section .row > [class*='col-'] {
         margin-bottom: 15px;
@@ -975,5 +1001,11 @@
     
     .banner_slider .slide__content--headings p {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 575px) {
+    .banner_slider .slide {
+        padding-top: 90px;
     }
 }
