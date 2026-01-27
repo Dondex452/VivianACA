@@ -24,19 +24,8 @@
 
  =============== */
 
-// Mobile menu toggle - must be outside jQuery ready to ensure it binds early
-document.addEventListener('DOMContentLoaded', function() {
-    var menuBtn = document.querySelector('.btn-show-menu-mobile');
-    var mainMenu = document.querySelector('nav.main-menu');
-    
-    if (menuBtn && mainMenu) {
-        menuBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            this.classList.toggle('is-active');
-            mainMenu.classList.toggle('show');
-        });
-    }
-});
+// Mobile menu toggle is handled by inline script in HTML files
+// to ensure it works even if this file has loading issues
 
 jQuery(function($) {
 
@@ -134,11 +123,16 @@ jQuery(function($) {
                 // Enable click event
                 $("nav.main-menu ul.menu").each(function(){
                     
-                    // Dropdown Fade Toggle
+                    // Dropdown Fade Toggle - only for items with submenus
                     $("a.mega-menu-link", this).on('click', function (e) {
-                        e.preventDefault();
-                        var t = $(this);
-                        t.toggleClass('active').next('ul').toggleClass('active');
+                        var $nextUl = $(this).next('ul');
+                        // Only prevent default if there's a submenu
+                        if ($nextUl.length > 0) {
+                            e.preventDefault();
+                            var t = $(this);
+                            t.toggleClass('active').next('ul').toggleClass('active');
+                        }
+                        // Otherwise let the link work normally
                     });   
 
                     // Megamenu style
@@ -168,44 +162,47 @@ jQuery(function($) {
     });
 
 
-    
+    // Banner Slider
     var $bannerSlider = jQuery('.banner_slider');
-    var $bannerFirstSlide = $('div.slide:first-child');
+    
+    if ($bannerSlider.length > 0) {
+        var $bannerFirstSlide = $('div.slide:first-child');
 
-    $bannerSlider.on('init', function (e, slick) {
-      var $firstAnimatingElements = $bannerFirstSlide.find('[data-animation]');
-      slideanimate($firstAnimatingElements);
-    });
-    $bannerSlider.on('beforeChange', function (e, slick, currentSlide, nextSlide) {
-      var $animatingElements = $('div.slick-slide[data-slick-index="' + nextSlide + '"]').find('[data-animation]');
-      slideanimate($animatingElements);
-    });
-    $bannerSlider.slick({
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      arrows: true,
-      fade: true,
-      dots: false,
-      swipe: true,
-      adaptiveHeight: true,
-      responsive: [
+        $bannerSlider.on('init', function (e, slick) {
+          var $firstAnimatingElements = $bannerFirstSlide.find('[data-animation]');
+          slideanimate($firstAnimatingElements);
+        });
+        $bannerSlider.on('beforeChange', function (e, slick, currentSlide, nextSlide) {
+          var $animatingElements = $('div.slick-slide[data-slick-index="' + nextSlide + '"]').find('[data-animation]');
+          slideanimate($animatingElements);
+        });
+        $bannerSlider.slick({
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          arrows: true,
+          fade: true,
+          dots: false,
+          swipe: true,
+          adaptiveHeight: true,
+          responsive: [
 
-        {
-            breakpoint: 1200,
-            settings: {
-                arrows: false
-            }
-        },
-        {
-            breakpoint: 767,
+            {
+                breakpoint: 1200,
                 settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                arrows: false,                
-                autoplay: false,
-                autoplaySpeed: 4000,
-                swipe: true } 
-            }] });
+                    arrows: false
+                }
+            },
+            {
+                breakpoint: 767,
+                    settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,                
+                    autoplay: false,
+                    autoplaySpeed: 4000,
+                    swipe: true } 
+                }] });
+    }
 
     function slideanimate(elements) {
       var animationEndEvents = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -303,14 +300,15 @@ jQuery(function($) {
 
 
 
-     jQuery(".ttm-circle-box").each(function () {
+    if (jQuery(".ttm-circle-box").length > 0 && typeof jQuery.fn.circleProgress === "function") {
+        jQuery(".ttm-circle-box").each(function () {
 
-        var circle_box = jQuery(this);
-        var fill_val = circle_box.data("fill");
-        var emptyFill_val = circle_box.data("emptyfill");
-        var thickness_val = circle_box.data("thickness");
-        var linecap_val = circle_box.data("linecap")
-        var fill_gradient = circle_box.data("gradient");
+            var circle_box = jQuery(this);
+            var fill_val = circle_box.data("fill");
+            var emptyFill_val = circle_box.data("emptyfill");
+            var thickness_val = circle_box.data("thickness");
+            var linecap_val = circle_box.data("linecap");
+            var fill_gradient = circle_box.data("gradient");
         var startangle_val = (-Math.PI / 4) * 1.5;
         if (fill_gradient != "") {
             fill_gradient = fill_gradient.split("|");
@@ -343,7 +341,8 @@ jQuery(function($) {
             },
             { offset: "90%" }
         );
-    });
+        });
+    }
 
 /*------------------------------------------------------------------------------*/
 /* Tab
@@ -434,44 +433,46 @@ jQuery(function($) {
 /*------------------------------------------------------------------------------*/
 /* Slick_slider
 /*------------------------------------------------------------------------------*/
-    $(".slick_slider").slick({
-        speed: 1000,
-        infinite: true,
-        arrows: false,
-        dots: false,                   
-        autoplay: false,
-        centerMode : false,
+    if ($(".slick_slider").length > 0) {
+        $(".slick_slider").slick({
+            speed: 1000,
+            infinite: true,
+            arrows: false,
+            dots: false,                   
+            autoplay: false,
+            centerMode : false,
 
-        responsive: [{
+            responsive: [{
 
-            breakpoint: 1360,
-            settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3
-            }
-        },
-        {
-            breakpoint: 1024,
-            settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3
-            }
-        },
-        {
-            breakpoint: 680,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
-            }
-        },
-        {
-            breakpoint: 575,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-        }]
-    });
+                breakpoint: 1360,
+                settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 1024,
+                settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 680,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            },
+            {
+                breakpoint: 575,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+    }
 
 
 

@@ -912,24 +912,25 @@
    FIX: Mobile Header and Navigation
    ================================================ */
 @media (max-width: 1199px) {
-    /* Hide top bar on mobile to save space */
+    /* Hide top bar on mobile */
     .top_bar {
         display: none;
     }
     
-    /* Header must not be absolute on mobile */
+    /* Header positioning - relative so it doesn't overlap content */
     header#masthead {
         position: relative !important;
         background-color: #202426 !important;
+        z-index: 999 !important;
     }
     
-    /* Hamburger menu visible */
+    /* Hamburger menu */
     .btn-show-menu-mobile {
-        display: block;
+        display: block !important;
         cursor: pointer;
     }
     
-    /* Hide extra header elements */
+    /* Hide extra header elements on mobile */
     .header_extra {
         display: none !important;
     }

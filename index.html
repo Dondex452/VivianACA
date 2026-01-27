@@ -1076,12 +1076,11 @@
         var menuBtn = document.querySelector('.btn-show-menu-mobile');
         var mainMenu = document.querySelector('nav.main-menu');
         if (menuBtn && mainMenu) {
-            menuBtn.onclick = function(e) {
+            menuBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                this.classList.toggle('is-active');
+                menuBtn.classList.toggle('is-active');
                 mainMenu.classList.toggle('show');
-                return false;
-            };
+            });
         }
     });
     </script>
